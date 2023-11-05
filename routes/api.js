@@ -46,6 +46,7 @@ router.post('/project-posts', async (req, res) => {
         ...req.body,
         id: count + 1,
     });
+    console.log(req.body);
     try {
         const savedProjectPost = await newProjectPost.save();
         res.status(201).json(savedProjectPost);
