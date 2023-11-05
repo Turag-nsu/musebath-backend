@@ -121,7 +121,7 @@ router.delete('/blog-posts/:id', getBlogPost, async (req, res) => {
 });
 // Define a route for deleting a project post
 router.delete('/project-posts/:id', getProjectPost, async (req, res) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     try {
         await res.projectPost.deleteOne({id: req.params.id});
         res.json({ message: 'Deleted project post' });
