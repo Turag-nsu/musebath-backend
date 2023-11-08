@@ -10,10 +10,6 @@ const projectPostSchema = new mongoose.Schema({
         required: true,
     },
     images: [String],
-    description: {
-        type: String,
-        required: true,
-    }
+    description: [String]
 });
-
 export default mongoose.model('projectPost', projectPostSchema);

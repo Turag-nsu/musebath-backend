@@ -1,10 +1,8 @@
-
 import express from 'express';
 const router = express.Router();
-
-// Import your BlogPost model
 import BlogPost from '../models/BlogPost.js';
 import ProjectPost from '../models/ProjectPost.js';
+
 // Define a route for retrieving all blog posts
 router.get('/blog-posts', async (req, res) => {
     try {
@@ -31,7 +29,6 @@ router.post('/blog-posts', async (req, res) => {
         ...req.body,
         id: count + 1,
     });
-    // console.log(req.body);
     try {
         const savedBlogPost = await newBlogPost.save();
         res.status(201).json(savedBlogPost);
@@ -46,7 +43,7 @@ router.post('/project-posts', async (req, res) => {
         ...req.body,
         id: count + 1,
     });
-    console.log(req.body);
+    // console.log(req.body);
     try {
         const savedProjectPost = await newProjectPost.save();
         res.status(201).json(savedProjectPost);
