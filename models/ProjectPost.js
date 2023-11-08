@@ -1,4 +1,4 @@
-import  mongoose  from "mongoose";
+import mongoose from "mongoose";
 
 const projectPostSchema = new mongoose.Schema({
     id: {
@@ -9,7 +9,13 @@ const projectPostSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    images: [String],
-    description: [String]
+    images: [
+        {
+            id: Number,
+            img: String,
+        },
+    ],
+    description: [String],
 });
-export default mongoose.model('projectPost', projectPostSchema);
+
+export default mongoose.model("projectPost", projectPostSchema);
