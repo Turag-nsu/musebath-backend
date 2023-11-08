@@ -51,77 +51,70 @@ router.post('/project-posts', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
-// Define a middleware function for retrieving a single blog post
-async function getBlogPost(req, res, next) {
-    let blogPost;
+
+// Define a route for retrieving a single blog post
+router.get('/blog-posts/:id', async (req, res) => {
+    const convertedId = parseInt(req.params.id);
+    // console.log(convertedId);
     try {
-        blogPost = await BlogPost.findOne({ id: req.params.id });
+        const blogPost = await BlogPost.findOne({ id: convertedId });
         if (blogPost == null) {
             return res.status(404).json({ message: 'Cannot find blog post' });
         }
+        res.json(blogPost);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
-    res.blogPost = blogPost;
-    next();
-}
-// Define a middleware function for retrieving a single project post
-async function getProjectPost(req, res, next) {
-    let projectPost;
+});
+// Define a route for retrieving a single project post
+router.get('/project-posts/:id', async (req, res) => {
+    // console.log(req.params.id);
+    const convertedId = parseInt(req.params.id);
     try {
-        projectPost = await ProjectPost.findOne({ id: req.params.id });
+        const projectPost = await ProjectPost.findOne({ id: convertedId });
         if (projectPost == null) {
             return res.status(404).json({ message: 'Cannot find project post' });
         }
+        res.json(projectPost);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
-    res.projectPost = projectPost;
-    next();
-}
-// Define a route for retrieving a single blog post
-router.get('/blog-posts/:id', getBlogPost, (req, res) => {
-    res.json(res.blogPost);
-});
-// Define a route for retrieving a single project post
-router.get('/project-posts/:id', getProjectPost, (req, res) => {
-    res.json(res.projectPost);
 });
 // Define a route for updating a blog post
-router.put('/blog-posts/:id', getBlogPost, async (req, res) => {
-    try {
-        const updatedBlogPost = await res.blogPost.set(req.body);
-        await updatedBlogPost.save();
-        res.json(updatedBlogPost);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
+// router.put('/blog-posts/:id', getBlogPost, async (req, res) => {
+//     try {
+//         const updatedBlogPost = await res.blogPost.set(req.body);
+//         await updatedBlogPost.save();
+//         res.json(updatedBlogPost);
+//     } catch (error) {
+//         res.status(400).json({ message: error.message });
+//     }
+// });
 // Define a route for updating a project post
-router.put('/project-posts/:id', getProjectPost, async (req, res) => {
-    try {
-        const updatedProjectPost = await res.projectPost.set(req.body);
-        await updatedProjectPost.save();
-        res.json(updatedProjectPost);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
+// router.put('/project-posts/:id', getProjectPost, async (req, res) => {
+//     try {
+//         const updatedProjectPost = await res.projectPost.set(req.body);
+//         await updatedProjectPost.save();
+//         res.json(updatedProjectPost);
+//     } catch (error) {
+//         res.status(400).json({ message: error.message });
+//     }
+// });
 // Define a route for deleting a blog post
-router.delete('/blog-posts/:id', getBlogPost, async (req, res) => {
-    console.log(req.params.id);
+router.delete('/blog-posts/:id', async (req, res) => {
     try {
-        await res.blogPost.deleteOne({id: req.params.id});
+        await BlogPost.deleteOne({ id: req.params.id });
         res.json({ message: 'Deleted blog post' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+
+    
 });
 // Define a route for deleting a project post
-router.delete('/project-posts/:id', getProjectPost, async (req, res) => {
-    // console.log(req.params.id);
+router.delete('/project-posts/:id', async (req, res) => {
     try {
-        await res.projectPost.deleteOne({id: req.params.id});
+        await ProjectPost.deleteOne({ id: req.params.id });
         res.json({ message: 'Deleted project post' });
     } catch (error) {
         res.status(500).json({ message: error.message });

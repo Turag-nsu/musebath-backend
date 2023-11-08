@@ -10,6 +10,14 @@ const blogPostSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    uploaderName: {
+        type: String,
+        required: true,
+    },
+    uploadDate: {
+        type: String,
+        required: true,
+    },
     tileImage: {
         type: String, // You can store the image URL
     },
