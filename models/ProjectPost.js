@@ -12,6 +12,10 @@ const projectPostSchema = new mongoose.Schema({
     subtitle: {
         type: String,
     },
+    category: {
+        type: String,
+        required: true,
+    },
     images: [
         {
             id: Number,

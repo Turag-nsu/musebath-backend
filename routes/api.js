@@ -15,7 +15,10 @@ router.get('/blog-posts', async (req, res) => {
 // Define a route for retrieving all project posts
 router.get('/project-posts', async (req, res) => {
     try {
-        const projectPosts = await ProjectPost.find().sort({ id: -1 });
+        const category = req.query.category;
+        console.log(category);
+        const projectPosts = await ProjectPost.find({category: category}).sort({ id: -1 });
+
         res.json(projectPosts);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -120,4 +123,15 @@ router.delete('/project-posts/:id', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+//if we have query in the link the link looks like `${baseUrl}?=${category}`
+// router.get('/project-posts', async (req, res) => {
+//     const category = req.query.category;
+//     console.log(category);
+//     try{
+//         const projectPosts = await ProjectPost.find({category: category}).sort({ id: -1 });
+//         res.json(projectPosts);
+//     }catch(error){
+//         res.status(500).json({ message: error.message });
+//     }
+// });
 export default router;
