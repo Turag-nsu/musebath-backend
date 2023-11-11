@@ -16,10 +16,13 @@ router.get('/blog-posts', async (req, res) => {
 router.get('/project-posts', async (req, res) => {
     try {
         const category = req.query.category;
-        console.log(category);
+        if(category === undefined){
+            const projectPosts = await ProjectPost.find().sort({ id: -1 });
+            res.json(projectPosts);
+        }else{
         const projectPosts = await ProjectPost.find({category: category}).sort({ id: -1 });
-
         res.json(projectPosts);
+        }
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
