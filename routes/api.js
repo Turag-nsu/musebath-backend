@@ -31,7 +31,7 @@ router.get('/project-posts', async (req, res) => {
 router.post('/blog-posts', async (req, res) => {
     // const count = await BlogPost.countDocuments();
     const lastBlogPost = await BlogPost.findOne().sort({ id: -1 });
-    const lastBlogPostId = lastBlogPost.id;
+    const lastBlogPostId = lastBlogPost? lastBlogPost.id : 0;
     //   const newBlogPost = new BlogPost(req.body);
     const newBlogPost = new BlogPost({
         ...req.body,
@@ -53,7 +53,7 @@ router.post('/project-posts', async (req, res) => {
         const lastProjectPost = await ProjectPost.findOne().sort({ id: -1 });
         lastProjectPostId = lastProjectPost.id;
     }
-    console.log(lastProjectPostId);
+    // console.log(lastProjectPostId);
     const newProjectPost = new ProjectPost({
         ...req.body,
         id: lastProjectPostId + 1,
