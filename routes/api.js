@@ -47,13 +47,13 @@ router.post('/blog-posts', async (req, res) => {
 //define a route for creating a new project post
 router.post('/project-posts', async (req, res) => {
     const count = await ProjectPost.countDocuments();
-
-    const lastProjectPost = await ProjectPost.findOne().sort({ id: -1 });
     let lastProjectPostId = 0;
-    if(lastProjectPost === null){
+    if(count === 0){
     }else{
+        const lastProjectPost = await ProjectPost.findOne().sort({ id: -1 });
         lastProjectPostId = lastProjectPost.id;
     }
+    console.log(lastProjectPostId);
     const newProjectPost = new ProjectPost({
         ...req.body,
         id: lastProjectPostId + 1,
