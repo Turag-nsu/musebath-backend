@@ -29,11 +29,13 @@ router.get('/project-posts', async (req, res) => {
 });
 // Define a route for creating a new blog post
 router.post('/blog-posts', async (req, res) => {
-    const count = await BlogPost.countDocuments();
+    // const count = await BlogPost.countDocuments();
+    const lastBlogPost = await BlogPost.findOne().sort({ id: -1 });
+    const lastBlogPostId = lastBlogPost? lastBlogPost.id : 0;
     //   const newBlogPost = new BlogPost(req.body);
     const newBlogPost = new BlogPost({
         ...req.body,
-        id: count + 1,
+        id: lastBlogPostId + 1,
     });
     try {
         const savedBlogPost = await newBlogPost.save();
@@ -45,9 +47,16 @@ router.post('/blog-posts', async (req, res) => {
 //define a route for creating a new project post
 router.post('/project-posts', async (req, res) => {
     const count = await ProjectPost.countDocuments();
+    let lastProjectPostId = 0;
+    if(count === 0){
+    }else{
+        const lastProjectPost = await ProjectPost.findOne().sort({ id: -1 });
+        lastProjectPostId = lastProjectPost.id;
+    }
+    // console.log(lastProjectPostId);
     const newProjectPost = new ProjectPost({
         ...req.body,
-        id: count + 1,
+        id: lastProjectPostId + 1,
     });
     // console.log(req.body);
     try {
