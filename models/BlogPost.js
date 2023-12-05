@@ -19,7 +19,7 @@ const blogPostSchema = new mongoose.Schema({
         required: true,
     },
     tileImage: {
-        type: String, // You can store the image URL
+        type: String,
     },
     category: {
         type: String,
@@ -33,7 +33,7 @@ const blogPostSchema = new mongoose.Schema({
         {
             title: String,
             content: String,
-            image: String, // You can store the image URL
+            image: String,
             listItems: [String],
         },
     ],
